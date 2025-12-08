@@ -1,0 +1,93 @@
+# ----------------------------------------
+# Python standard ignores
+# ----------------------------------------
+__pycache__/
+*.py[cod]
+*.pyo
+*.pyd
+*.so
+*.egg
+*.egg-info/
+dist/
+build/
+pip-wheel-metadata/
+*.spec
+
+# Virtual environments
+.venv/
+venv/
+env/
+ENV/
+
+# Jupyter & IPython
+.ipynb_checkpoints/
+profile_default/
+ipython_config.py
+
+# ----------------------------------------
+# OS / Editor / Tooling
+# ----------------------------------------
+.DS_Store
+*.swp
+*.swo
+.idea/
+.vscode/
+*.code-workspace
+
+# ----------------------------------------
+# DOCX translator project-specific
+# ----------------------------------------
+
+# 1. DeepL translation caches
+# (Your two cache locations)
+src/python/storage/cache/
+src/python/docx_translator/storage/cache/
+
+# 2. Any JSON cache file anywhere under src (safe)
+**/cache/*.json
+
+# 3. Input/output work directories
+in_docs/
+out_docs/
+
+# But allow sample outputs in examples/
+!examples/sample_output/
+
+# 4. Temporary DOCX lock files
+~$*.docx
+
+# ----------------------------------------
+# Logs
+# ----------------------------------------
+*.log
+
+
+# ----------------------------------------
+# Shell scripts that generate intermediate state
+# ----------------------------------------
+*.sh
+# Allow top-level scripts explicitly:
+!create_deepl_layout.sh
+!scripts/run_local.sh
+
+# ----------------------------------------
+# Packaging helpers
+# ----------------------------------------
+*.tar.gz
+*.whl
+MANIFEST
+
+# ----------------------------------------
+# Test artifacts
+# ----------------------------------------
+.coverage
+htmlcov/
+.tox/
+pytest_cache/
+
+# ----------------------------------------
+# Misc
+# ----------------------------------------
+*.tmp
+*.bak
+*.old

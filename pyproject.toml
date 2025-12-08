@@ -1,0 +1,64 @@
+[build-system]
+requires = ["setuptools>=61.0"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "docx-translator-smith"
+version = "0.1.0"
+description = "DOCX translator using DeepL"
+readme = "README.md"
+requires-python = ">=3.11"
+
+authors = [
+    { name = "Eiichi Yamamoto" },
+]
+
+license = { file = "LICENSE" }
+
+keywords = ["docx", "translation", "deepl", "nlp", "cli"]
+
+dependencies = [
+    "python-docx>=1.1.0",
+    "requests>=2.31.0",
+]
+
+classifiers = [
+    "Development Status :: 3 - Alpha",
+    "Intended Audience :: Developers",
+    "Intended Audience :: Information Technology",
+    "License :: OSI Approved :: MIT License",
+    "Programming Language :: Python",
+    "Programming Language :: Python :: 3",
+    "Programming Language :: Python :: 3.11",
+    "Programming Language :: Python :: 3.12",
+    "Programming Language :: Python :: 3.13",
+    "Environment :: Console",
+    "Operating System :: OS Independent",
+    "Topic :: Text Processing :: Linguistic",
+    "Topic :: Utilities",
+]
+
+[project.optional-dependencies]
+dev = [
+    "pytest>=7.0",
+    "pytest-cov",
+    "ruff",
+    "black",
+    "mypy",
+    "build",
+    "twine",
+]
+
+[project.urls]
+Homepage = "https://github.com/yeiichi/docx-translator"
+Issues = "https://github.com/yeiichi/docx-translator/issues"
+
+[project.scripts]
+docx-translator = "docx_translator.cli:main"
+docx-translator-bench = "docx_translator.scripts.bench_translation:main"
+
+[tool.setuptools]
+package-dir = { "" = "src/python" }
+
+[tool.setuptools.packages.find]
+where = ["src/python"]
