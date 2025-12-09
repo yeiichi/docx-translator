@@ -45,6 +45,66 @@ Benchmark translation performance:
 docx-translator-bench     --src EN     --tgt JA     --input-dir in_docs     --output-dir out_docs     -v
 ```
 
+## 🧰 Example Makefile for end users
+
+If you prefer a simple `make` interface in your **own project** (not for developing this library itself), you can use a wrapper Makefile like the one below.  
+Adjust the `VENV` path to your virtual environment, save this as `Makefile` (or `Makefile_sample.mk`) in your project root, and run `make help` to see the available targets.
+
+```make
+# Define variables
+VENV   := /path/to/venv
+BIN    = $(VENV)/bin
+PYTHON = $(BIN)/python
+
+.DEFAULT_GOAL := help
+
+.PHONY: help ende deen ende-pro deen-pro
+
+help: ## Show this help message
+	@echo "Usage: make [target]"
+	@echo ""
+	@echo "Targets:"
+	@printf "  \033[36m%-15s\033[0m %s\n" "help" "Show this help message"
+	@grep -E '^[a-zA-Z_-]+:.*?## ' $(MAKEFILE_LIST) \
+		| grep -v '^help:' \
+		| sort \
+		| awk 'BEGIN {FS = ":.*?## "}; {printf "  \033[36m%-15s\033[0m %s\n", $$1, $$2}'
+
+
+# ----------------------------------------------
+# English <-> German Using FREE endpoint
+# ----------------------------------------------
+ende: ## Batch translate: in_docs -> out_docs, EN → DE
+	$(PYTHON) -m docx_translator.cli \
+		translate-dir \
+		-s EN -t DE \
+		-i in_docs -o out_docs \
+
+deen: ## Batch translate: in_docs -> out_docs, DE → EN
+	$(PYTHON) -m docx_translator.cli \
+		translate-dir \
+		-s DE -t EN \
+		-i in_docs -o out_docs \
+
+# ----------------------------------------------
+# English <-> German Using PRO endpoint
+# ----------------------------------------------
+ende-pro: ## Batch translate: in_docs -> out_docs, EN → DE
+	$(PYTHON) -m docx_translator.cli \
+		translate-dir \
+		-s EN -t DE \
+		-i in_docs -o out_docs \
+		--pro
+
+deen-pro: ## Batch translate: in_docs -> out_docs, DE → EN
+	$(PYTHON) -m docx_translator.cli \
+		translate-dir \
+		-s DE -t EN \
+		-i in_docs -o out_docs \
+		--pro
+```
+
+This sample Makefile is **not** installed by the package; it is only provided here as a reference for end users who like a `make`-based workflow.
 ---
 
 ## 🐍 Quick Start (Python)
