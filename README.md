@@ -110,12 +110,17 @@ This sample Makefile is **not** installed by the package; it is only provided he
 ## 🐍 Quick Start (Python)
 
 ```python
-from docx_translator.core.translator import translate_docx
+from docx_translator.core.translator import DocxTranslator
 
-src_path = "example.docx"
-dst_path = "example.ja.docx"
+translator = DocxTranslator(
+    src_lang="EN",
+    tgt_lang="JA",
+)
 
-translate_docx(src_path, dst_path, src_lang="EN", tgt_lang="JA")
+translator.translate_file(
+    input_path="example.docx",
+    output_path="example.ja.docx",
+)
 ```
 
 ---
@@ -131,6 +136,33 @@ Export your DeepL API key:
 ```bash
 export DEEPL_API_KEY="your-key"
 ```
+
+---
+
+## 🔑 DeepL API Endpoint (Free / Pro)
+
+By default, the DeepL **Free** endpoint is used:
+
+    https://api-free.deepl.com/v2/translate
+
+To explicitly use **DeepL Pro**, enable it via CLI or Python.
+
+### CLI
+
+```bash
+docx-translator translate-dir \
+  -s EN -t JA \
+  -i in_docs -o out_docs \
+  --pro
+```
+
+### Python
+
+```python
+translator = DocxTranslator(src_lang="EN", tgt_lang="JA", pro=True)
+```
+
+The API key itself does **not** automatically select the endpoint.
 
 ---
 
