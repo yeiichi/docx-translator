@@ -10,7 +10,7 @@ Provides both a **Python library** and **CLI tools** for batch-translating Micro
 
 ---
 
-## ✨ Features
+## Features
 
 - Translate DOCX documents using the DeepL API  
 - Preserve document structure (runs, paragraphs, tables)  
@@ -21,7 +21,7 @@ Provides both a **Python library** and **CLI tools** for batch-translating Micro
 
 ---
 
-## 📦 Installation
+## Installation
 
 ```bash
 pip install docx-translator-smith
@@ -31,7 +31,7 @@ Requires **Python 3.11+**.
 
 ---
 
-## 🚀 Quick Start (CLI)
+## Quick Start (CLI)
 
 Translate an entire directory:
 
@@ -45,7 +45,7 @@ Benchmark translation performance:
 docx-translator-bench     --src EN     --tgt JA     --input-dir in_docs     --output-dir out_docs     -v
 ```
 
-## 🧰 Example Makefile for end users
+## Example Makefile for end users
 
 If you prefer a simple `make` interface in your **own project** (not for developing this library itself), you can use a wrapper Makefile like the one below.  
 Adjust the `VENV` path to your virtual environment, save this as `Makefile` (or `Makefile_sample.mk`) in your project root, and run `make help` to see the available targets.
@@ -110,22 +110,21 @@ This sample Makefile is **not** installed by the package; it is only provided he
 ## 🐍 Quick Start (Python)
 
 ```python
-from docx_translator.core.translator import DocxTranslator
+from docx_translator import DocxTranslator
 
-translator = DocxTranslator(
-    src_lang="EN",
-    tgt_lang="JA",
-)
+translator = DocxTranslator()
 
 translator.translate_file(
     input_path="example.docx",
     output_path="example.ja.docx",
+    source_lang="EN",
+    target_lang="JA",
 )
 ```
 
 ---
 
-## 🔑 Requirements
+## Requirements
 
 - DeepL API key  
 - Python 3.11 or later  
@@ -137,36 +136,50 @@ Export your DeepL API key:
 export DEEPL_API_KEY="your-key"
 ```
 
+> **Note on Authentication:** Since version 0.1.2, this tool uses the `Authorization: DeepL-Auth-Key <key>` header as recommended by the latest DeepL API specifications.
+
 ---
 
-## 🔑 DeepL API Endpoint (Free / Pro)
+## DeepL API Endpoint (Free / Pro)
+
+`DocxTranslator` itself is **endpoint-agnostic**.
+DeepL Free / Pro selection is handled by the **translation engine** (`DeepLEngine`),
+typically via the CLI or engine configuration.
+
+### Default behavior (Free)
 
 By default, the DeepL **Free** endpoint is used:
 
     https://api-free.deepl.com/v2/translate
 
-To explicitly use **DeepL Pro**, enable it via CLI or Python.
+### Using DeepL Pro (CLI)
 
-### CLI
+Enable the Pro endpoint explicitly when using the CLI:
 
 ```bash
-docx-translator translate-dir \
-  -s EN -t JA \
-  -i in_docs -o out_docs \
-  --pro
+docx-translator translate-dir   -s EN -t JA   -i in_docs -o out_docs   --pro
 ```
 
-### Python
+This switches the endpoint to:
+
+    https://api.deepl.com/v2/translate
+
+### Python usage note
+
+The Python API does **not** select endpoints via `DocxTranslator`.
+If needed, configure the DeepL engine explicitly and inject it:
 
 ```python
-translator = DocxTranslator(src_lang="EN", tgt_lang="JA", pro=True)
-```
+from docx_translator import DocxTranslator, DeepLEngine
 
-The API key itself does **not** automatically select the endpoint.
+engine = DeepLEngine(pro=True)
+translator = DocxTranslator(engine=engine)
+```
 
 ---
 
-## 🛠 Development
+
+## Development
 
 ```bash
 git clone https://github.com/yeiichi/docx-translator
@@ -186,26 +199,26 @@ make publish
 
 ---
 
-## 📄 License
+## License
 
-MIT License © 2025 Eiichi Yamamoto  
+MIT License © 2026 Eiichi Yamamoto  
 See `LICENSE` for full text.
 
 ---
 
-## 👤 Author
+## Author
 
 **Eiichi Yamamoto**
 
 ---
 
-## 📌 Project Status
+## Project Status
 
 This is an **Alpha** release — stable for CLI use, but internal APIs may evolve.
 
 ---
 
-## 🔗 Links
+## Links
 
 - PyPI: <https://pypi.org/project/docx-translator-smith/>
 - Source Code: <https://github.com/yeiichi/docx-translator/>

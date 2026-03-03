@@ -76,7 +76,12 @@ class DeepLClient:
 
         self._session = requests.Session()
         # A small, explicit UA helps debugging and log analysis.
-        self._session.headers.update({"User-Agent": "docx-translator/DeepLClient"})
+        self._session.headers.update(
+            {
+                "User-Agent": "docx-translator/DeepLClient",
+                "Authorization": f"DeepL-Auth-Key {self.api_key}",
+            }
+        )
 
     # ------------------------------------------------------------------ #
     # Public API
@@ -119,7 +124,6 @@ class DeepLClient:
 
         # Build form-encoded payload explicitly to keep ordering clear.
         data: list[tuple[str, str]] = [
-            ("auth_key", self.api_key),
             ("source_lang", source_lang),
             ("target_lang", target_lang),
             ("preserve_formatting", "1" if preserve_formatting else "0"),

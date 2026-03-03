@@ -88,7 +88,11 @@ bench: ## Benchmark translation
 .PHONY: clean deep-clean
 
 clean: ## Remove temp files and caches
-	rm -rf .pytest_cache .mypy_cache .ruff_cache
+	rm -rf .pytest_cache .mypy_cache .ruff_cache .coverage htmlcov/
+	find . -type d -name "__pycache__" -exec rm -rf {} +
+	find . -type f -name "*.py[cod]" -delete
+	find . -type f -name "*.so" -delete
 
 deep-clean: clean ## Remove build artifacts too
-	rm -rf dist build *.egg-info
+	rm -rf dist build
+	find . -type d -name "*.egg-info" -exec rm -rf {} +
